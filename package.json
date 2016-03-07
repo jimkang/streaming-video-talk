@@ -1,0 +1,32 @@
+{
+  "name": "streaming-video-talk",
+  "version": "1.0.0",
+  "description": "A talk about the current state of streaming video in the browser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jimkang/streaming-video-talk.git"
+  },
+  "keywords": [],
+  "author": "Jim Kang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jimkang/streaming-video-talk/issues"
+  },
+  "homepage": "https://github.com/jimkang/streaming-video-talk",
+  "devDependencies": {
+    "tape": "^3.0.3"
+  },
+  "dependencies": {
+    "big-presentation": "^2.0.0",
+    "browserify": "^8.1.3",
+    "d3": "^3.5.5",
+    "idmaker": "^0.1.1",
+    "lodash": "^3.6.0",
+    "smash": "0.0.14",
+    "uglify-js": "^2.4.17"
+  }
+}

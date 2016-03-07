@@ -1,0 +1,97 @@
+<html>
+<head>
+  <title>streaming-video-talk</title>
+  <link rel="stylesheet" href="node_modules/big-presentation/big.css"></link>
+  <script src='node_modules/big-presentation/big.js'></script>
+</head>
+<body>
+
+<div>
+- Streaming
+- What is it?
+  - Getting data to from one point to another, one small chunk at a time
+  - e.g. Data processing tool and memory
+  - On demand
+  - Mechanical term "back pressure" (flow reduction, not actually reverse pressure)
+</div>
+<div>
+- The state of streaming video
+- Things that happen with "progressive download" right now
+  - Firefox freezing
+    - Too much to handle at a time
+- Too long of a wait for first frame on some connections
+</div>
+<div>
+
+- How can *you* get streaming video?
+  - HTML 5 video is here, right?
+  - video.js &mdash; via Flash.
+    - Link to confirmation here.
+  - JWPlayer - via Flash only.
+    - Link to confirmation here
+  - https://github.com/harvard-dce/hls-vendor-comparison
+</div>
+<div>
+
+  - How can you get it without Flash?
+    - YouTube
+      - Screenshot of DevTools
+    - Netflix
+      - Screenshot of DevTools
+      - Not open source
+</div>
+<div>
+
+    - Not open source
+    - Safari and Mobile Safari support HLS (a kind of streaming video) natively
+      - Markup here
+    - Chrome on Android supports HLS, but NOT Chrome on desktop
+      - I wonder why?
+</div>
+<div>
+
+  - So where can we go for this?
+    - There's two major standards for streaming video in the browser: HLS and DASH
+    - Both
+        - Media broken into separate files
+        - Adaptive bitrate
+</div>
+<div>
+        
+    - HLS
+      - m3u8
+      - ts files
+      - Apple-created
+</div>
+<div>
+    - DASH
+      - Sort of supported natively in Firefox from versions 21-23 (then removed)
+      - Has quite a few members: http://dashif.org/members/
+      - Reference implementation is not robust: https://github.com/Dash-Industry-Forum/dash.
+</div>
+<div>
+    &mdash; Differ in the way chunks are broken, encoded, and read.
+</div>
+<div>
+  &mdash; How can we implement either?
+    &mdash; We know how to download file chunks.
+</div>
+<div>
+    &mdash; But <video> just takes a src attribute.
+      &mdash; MediaSource extensions
+      &mdash; Lets you create a SourceBuffer
+      &mdash; SourceBuffer allows you to append chunks.
+</div>
+<div>
+    &mdash; Encode with Bento
+      &mdash; https://github.com/harvard-dce/encode-for-mediasource
+    &mdash; Reference implementation:
+    &mdash; https://hacks.mozilla.org/2015/07/streaming-media-on-demand-with-media-source-extensions/
+</div>
+<div>
+    &mdash; Demo
+      &mdash; https://github.com/harvard-dce/vstream-experiment
+</div>  
+
+</body>
+</html>
