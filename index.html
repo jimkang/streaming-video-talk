@@ -2,92 +2,191 @@
 <head>
   <title>streaming-video-talk</title>
   <link rel="stylesheet" href="lib/big.css"></link>
+  <link rel="stylesheet" href="app.css"></link>
   <script src='lib/big.js'></script>
 </head>
 <body>
 
 <div>
-- Streaming
-- What is it?
-  - Getting data to from one point to another, one small chunk at a time
-  - e.g. Data processing tool and memory
-  - On demand
-  - Mechanical term "back pressure" (flow reduction, not actually reverse pressure)
+First: Streaming in general
 </div>
 <div>
-- The state of streaming video
-- Things that happen with "progressive download" right now
-  - Firefox freezing
-    - Too much to handle at a time
-- Too long of a wait for first frame on some connections
+  Getting data to from one point to another, one small chunk at a time
 </div>
 <div>
+e.g. Data processing tools
+</div>
+<div>
+  <p>On demand</p>
+  <br />
+  <p>"Back pressure"</p>
+</div>
 
-- How can *you* get streaming video?
-  - HTML 5 video is here, right?
-  - video.js &mdash; via Flash.
-    - Link to confirmation here.
-  - JWPlayer - via Flash only.
-    - Link to confirmation here
-  - https://github.com/harvard-dce/hls-vendor-comparison
-</div>
 <div>
+  Let's go over the alternative to streaming.
+</div>
 
-  - How can you get it without Flash?
-    - YouTube
-      - Screenshot of DevTools
-    - Netflix
-      - Screenshot of DevTools
-      - Not open source
+<div>
+  &lt;video src="file.mp4"&gt;
 </div>
 <div>
+  Firefox freezing
+</div>
+<div>
+  [demo or gif here]  
+</div>
+<div>  
+  Too much to handle at a time
+</div>
+<div>
+  Too long of a wait for first frame on some connections
+</div>
 
-    - Not open source
-    - Safari and Mobile Safari support HLS (a kind of streaming video) natively
-      - Markup here
-    - Chrome on Android supports HLS, but NOT Chrome on desktop
-      - I wonder why?
-</div>
 <div>
+  The state of streaming video in the browser.
+</div>
 
-  - So where can we go for this?
-    - There's two major standards for streaming video in the browser: HLS and DASH
-    - Both
-        - Media broken into separate files
-        - Adaptive bitrate
+<div>
+  tl;dr: Kinda wonky
+</div>
+
+<div>
+  How can you get streaming video for your web app?
+</div>
+
+<div>
+  video.js's videojs-hls-contrib
 </div>
 <div>
-        
-    - HLS
-      - m3u8
-      - ts files
-      - Apple-created
+  <a href="https://github.com/videojs/videojs-contrib-hls/issues/421">Via Flash.</a>
 </div>
 <div>
-    - DASH
-      - Sort of supported natively in Firefox from versions 21-23 (then removed)
-      - Has quite a few members: http://dashif.org/members/
-      - Reference implementation is not robust: https://github.com/Dash-Industry-Forum/dash.
+  <img src="images/vjs-flash-issue.png" />
 </div>
 <div>
-    &mdash; Differ in the way chunks are broken, encoded, and read.
+  JWPlayer
+</div>
+<div>  
+  <a href="https://support.jwplayer.com/customer/portal/articles/1430189-about-hls-streaming">Via Flash.</a>
 </div>
 <div>
-  &mdash; How can we implement either?
-    &mdash; We know how to download file chunks.
+  How can you get it without Flash?
+</div>
+
+<div>
+  Safari and Mobile Safari support HLS (a kind of streaming video) natively
+</div>
+
+<div>    
+  <pre>
+    &lt;video
+        src="http://apple.com/bipbopall.m3u8"
+        height="300" width="400"
+    &gt;
+    &lt;/video&gt;
+  </pre>
+</div>
+
+<div>
+    Chrome on Android supports HLS via that kind of markup, but NOT Chrome on desktop
+</div>
+
+<div>
+  OK. Does anyone have it going on all of the major browsers?
+</div>
+
+<div>
+  YouTube has it.
 </div>
 <div>
-    &mdash; But <video> just takes a src attribute.
-      &mdash; MediaSource extensions
-      &mdash; Lets you create a SourceBuffer
-      &mdash; SourceBuffer allows you to append chunks.
+  <img src="images/youtube-source-buffer-usage.png" />
 </div>
 <div>
+  Netflix has it.
+</div>
+<div>  
+  <img src="images/netflix-source-buffer-usage.png" />
+</div>
+
+<div>
+  Not open source, though. So how are they doing it?
+</div>
+
+<div>
+  Review: Streaming is getting data to from one point to another, one small chunk at a time.
+</div>
+
+<div>
+  Server => video player
+</div>
+
+<div>
+  We know how to download file chunks.
+</div>
+
+<div>
+  <pre>
+     var lastReadIndex = 0;
+
+     var xhr = new XMLHttpRequest();
+     xhr.open('GET', 'http://server.com/file.mp4');
+     xhr.xhr.onreadystatechange = stateChanged;
+     xhr.send();
+
+     function stateChanged() {
+      if (xhr.readyState === 3) {
+        emitChunk(this.responseText.substr(lastReadIndex));
+        lastReadIndex = this.responseText.length;
+      }
+    }
+  </pre>
+
+</div>
+
+<div>
+  But getting the chunks into the video (HTMLVideoElement)?
+</div>
+
+<div>
+  &lt;video&gt; just takes a src attribute.
+</div>
+
+<div class="wide-slide">
+  <center>
+    <img src="images/thinking-face.png" class="thinking-image" />
+  </center>
+</div>
+
+<div>
+  Fortunately, major browsers support MediaSource extensions.
+</div>
+
+<div>
+  Create a SourceBuffer with a url you can give to the video src.
+</div>
+
+<div>
+  Append chunks to the SourceBuffer as you receive them.
+</div>
+
+<div>
+  Requires hairy special encoding of segments via Bento.
+</div>
+
+<div>
+  After you get all that going, it's up to you to implement adaptive bit rate adjustments. Hooray!
+</div>
+
+<div>
+  Links: 
+    - https://github.com/harvard-dce/hls-vendor-comparison
+
     &mdash; Encode with Bento
       &mdash; https://github.com/harvard-dce/encode-for-mediasource
     &mdash; Reference implementation:
     &mdash; https://hacks.mozilla.org/2015/07/streaming-media-on-demand-with-media-source-extensions/
 </div>
+
 <div>
     &mdash; Demo
       &mdash; https://github.com/harvard-dce/vstream-experiment

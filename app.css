@@ -1,3 +1,18 @@
 body {
   font-family: "helvetica neue";
 }
+
+pre {
+  font-size: 40px;
+  line-height: 1.2em;
+}
+
+img.thinking-image {
+  width: 160px;
+  height: 160px;
+}
+
+.wide-slide {
+  width: 100%;
+  padding-left: 60px;
+}
