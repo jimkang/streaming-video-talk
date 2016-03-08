@@ -17,16 +17,8 @@
     "url": "https://github.com/jimkang/streaming-video-talk/issues"
   },
   "homepage": "https://github.com/jimkang/streaming-video-talk",
-  "devDependencies": {
-    "tape": "^3.0.3"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "big-presentation": "^2.0.0",
-    "browserify": "^8.1.3",
-    "d3": "^3.5.5",
-    "idmaker": "^0.1.1",
-    "lodash": "^3.6.0",
-    "smash": "0.0.14",
-    "uglify-js": "^2.4.17"
+    "big-presentation": "^2.0.0"
   }
 }
