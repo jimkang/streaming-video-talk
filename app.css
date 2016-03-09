@@ -16,3 +16,7 @@ img.thinking-image {
   width: 100%;
   padding-left: 60px;
 }
+
+.links a {
+  font-size: smaller;
+}
