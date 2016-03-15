@@ -20,3 +20,7 @@ img.thinking-image {
 .links a {
   font-size: smaller;
 }
+
+.bigger-line-gap {
+  line-height: 1.18em;
+}
