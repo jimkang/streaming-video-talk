@@ -1,7 +1,7 @@
 streaming-video-talk
 ==================
 
-A talk about the current state of streaming video in the browser.
+A talk about the current (2016) state of streaming video in the browser.
 
 Installation
 ------------
